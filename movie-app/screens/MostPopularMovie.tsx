@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { getPopularMovie, getTopRatedMovie } from '../apiRequest/apiRequest'
 import MovieCard from '../components/bottom-navbar/MovieCard'
 import { MovieResult, TopPopularResponseApi } from '../interfaces/TopPopularResponseApi'
@@ -14,8 +14,6 @@ const MostPopularMovie = () => {
   }, [])
 
   const getMovies = async () => {
-    console.log('work')
-
     try {
       const data: TopPopularResponseApi = await getPopularMovie(nextPage)
       const movies = data.results
@@ -53,13 +51,20 @@ const MostPopularMovie = () => {
       onEndReachedThreshold={0.2}
       renderItem={({ item }) => {
         return (
-          <>
+          <View style={styles.containeurOfCard}>
             <MovieCard movie={item} />
-          </>
+          </View>
         )
       }}
     />
   )
 }
+
+const styles = StyleSheet.create({
+  containeurOfCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
 
 export default MostPopularMovie
