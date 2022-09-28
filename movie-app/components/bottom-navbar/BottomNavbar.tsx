@@ -18,11 +18,10 @@ const BottomNavbar = () => {
             if (route.name === 'TopRatedMovie') {
               iconName = focused ? 'checkmark-circle-sharp' : 'checkmark-circle-outline'
             } else if (route.name === 'MostPopularMovie') {
-              iconName = focused ? 'bar-chart-outline' : 'bar-chart-sharp'
+              iconName = focused ? 'bar-chart-sharp' : 'bar-chart-outline'
             }
             return <Ionicons name={iconName} size={size} color={color} />
           },
-
           tabBarActiveTintColor: 'blue',
           tabBarInactiveTintColor: 'gray',
         })}
