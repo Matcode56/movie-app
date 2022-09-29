@@ -3,32 +3,37 @@ export interface ProvidersResponseApi {
   results: ProvidersByCountry
 }
 
-interface ProvidersByCountry {
-  [key: string]: Provider[]
+export interface ProvidersByCountry {
+  [key: string]: Providers[]
 }
 
-interface Provider {
+export interface Providers {
   link: string
-  flatrate: Flatrate[]
-  rent: Rent[]
-  buy: Buy[]
+  flatrate: Provider[]
+  rent: Provider[]
+  buy: Provider[]
 }
-
-interface Flatrate {
+export interface Provider {
+  display_priority: number
+  logo_path: string
+  provider_id: number
+  provider_name: string
+}
+export interface Flatrate {
   display_priority: number
   logo_path: string
   provider_id: number
   provider_name: string
 }
 
-interface Rent {
+export interface Rent {
   display_priority: number
   logo_path: string
   provider_id: number
   provider_name: string
 }
 
-interface Buy {
+export interface Buy {
   display_priority: number
   logo_path: string
   provider_id: number

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { getPopularMovie, getTopRatedMovie } from '../apiRequest/apiRequest'
+import { getPopularMovie, getTopRatedMovie, requestGetProvidersOfMovie } from '../apiRequest/apiRequest'
+import { getMoviesWithProviders } from '../apiRequest/apiService'
 import MovieCard from '../components/bottom-navbar/MovieCard'
+import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
 import { MovieResult, TopPopularResponseApi } from '../interfaces/TopPopularResponseApi'
 
 const MostPopularMovie = () => {
-  const [movies, setMovies] = useState<MovieResult[]>([])
+  const [movies, setMovies] = useState<MovieResultWithProviders[]>([])
   const [totalPage, setTotalPage] = useState<number>()
   const [nextPage, setNextPage] = useState<number>(1)
 
@@ -15,7 +17,9 @@ const MostPopularMovie = () => {
 
   const getMovies = async () => {
     try {
-      const data: TopPopularResponseApi = await getPopularMovie(nextPage)
+      const data: MoviesWithProviders = await getMoviesWithProviders(nextPage)
+      // console.log(data.results[0].providers)
+
       const movies = data.results
       const totalPage = data.total_pages
       const page = data.page
@@ -35,7 +39,7 @@ const MostPopularMovie = () => {
     setNextPage(nextPagee)
   }
 
-  const updateMovie = (moviesToAdd: MovieResult[]) => {
+  const updateMovie = (moviesToAdd: MovieResultWithProviders[]) => {
     const oldDataMovies = movies
     return setMovies([...oldDataMovies, ...moviesToAdd])
   }
@@ -62,6 +66,8 @@ const MostPopularMovie = () => {
 
 const styles = StyleSheet.create({
   containeurOfCard: {
+    marginTop: 10,
+    marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

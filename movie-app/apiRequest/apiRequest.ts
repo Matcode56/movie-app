@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { tokenTMDB } from 'react-native-dotenv'
-import { ProvidersResponseApi } from '../interfaces/ProvidersResponseApi'
+import { Providers, ProvidersResponseApi } from '../interfaces/ProvidersResponseApi'
 import { TopPopularResponseApi } from '../interfaces/TopPopularResponseApi'
 
 const headersToken = { Authorization: `bearer ${tokenTMDB}` }
@@ -24,9 +24,12 @@ export const getPopularMovie = async (page: number): Promise<TopPopularResponseA
   }
 }
 
-export const getProvidersOfMovie = async (movieId: number): Promise<ProvidersResponseApi> => {
+export const requestGetProvidersOfMovie = async (movieId: number): Promise<ProvidersResponseApi> => {
   try {
-    const res = await axios.get<ProvidersResponseApi>(`/${movieId}/watch/providers`, { headers: headersToken })
+    const res = await axios.get<ProvidersResponseApi>(`${baseURL}/${movieId}/watch/providers`, {
+      headers: headersToken,
+    })
+
     return res.data
   } catch (err) {
     return err
