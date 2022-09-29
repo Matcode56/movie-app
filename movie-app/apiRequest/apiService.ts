@@ -1,11 +1,11 @@
 import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
 import { Provider, ProvidersByCountry } from '../interfaces/ProvidersResponseApi'
-import { MovieResult, TopPopularResponseApi } from '../interfaces/TopPopularResponseApi'
-import { getPopularMovie, requestGetProvidersOfMovie } from './apiRequest'
+import { MovieResult, MovieResponseApi } from '../interfaces/MovieResponseApi'
+import { requestGetPopularMovie, requestGetProvidersOfMovie } from './apiRequest'
 
 export const getMoviesWithProviders = async (page: number): Promise<MoviesWithProviders> => {
   try {
-    const response: TopPopularResponseApi = await getPopularMovie(page)
+    const response: MovieResponseApi = await requestGetPopularMovie(page)
 
     const moviesWithProviders: MovieResultWithProviders[] = await getProvidersOfMovies(response)
 
@@ -16,12 +16,11 @@ export const getMoviesWithProviders = async (page: number): Promise<MoviesWithPr
   }
 }
 
-const getProvidersOfMovies = async (response: TopPopularResponseApi) => {
+const getProvidersOfMovies = async (response: MovieResponseApi): Promise<MovieResultWithProviders[]> => {
   try {
     const movies = response.results
-
-    const moviesWithProviders = await Promise.all(
-      movies.map(async (movie: MovieResult) => {
+    const moviesWithProviders: MovieResultWithProviders[] = await Promise.all(
+      movies.map(async (movie: MovieResult): Promise<MovieResultWithProviders> => {
         const movieWithProviders = await getProvidersOfMovie(movie)
 
         return movieWithProviders
@@ -34,7 +33,7 @@ const getProvidersOfMovies = async (response: TopPopularResponseApi) => {
   }
 }
 
-const getProvidersOfMovie = async (movie: MovieResult) => {
+const getProvidersOfMovie = async (movie: MovieResult): Promise<MovieResultWithProviders> => {
   try {
     const id = movie.id
     const providers = await requestGetProvidersOfMovie(id)

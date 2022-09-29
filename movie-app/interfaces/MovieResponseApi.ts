@@ -1,4 +1,4 @@
-export interface TopPopularResponseApi {
+export interface MovieResponseApi {
   page: number
   results: MovieResult[]
   total_pages: number

@@ -4,7 +4,7 @@ export interface ProvidersResponseApi {
 }
 
 export interface ProvidersByCountry {
-  [key: string]: Providers[]
+  [country: string]: Providers[]
 }
 
 export interface Providers {

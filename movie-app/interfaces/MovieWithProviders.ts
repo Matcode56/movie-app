@@ -1,5 +1,5 @@
 import { Providers, ProvidersByCountry } from './ProvidersResponseApi'
-import { MovieResult } from './TopPopularResponseApi'
+import { MovieResult } from './MovieResponseApi'
 
 export interface MoviesWithProviders {
   page: number
