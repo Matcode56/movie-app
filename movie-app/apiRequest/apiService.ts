@@ -1,11 +1,24 @@
 import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
 import { Provider, ProvidersByCountry } from '../interfaces/ProvidersResponseApi'
 import { MovieResult, MovieResponseApi } from '../interfaces/MovieResponseApi'
-import { requestGetPopularMovie, requestGetProvidersOfMovie } from './apiRequest'
+import { requestGetPopularMovie, requestGetProvidersOfMovie, requestGetTopRatedMovie } from './apiRequest'
 
-export const getMoviesWithProviders = async (page: number): Promise<MoviesWithProviders> => {
+export const getPopularMoviesWithProviders = async (page: number): Promise<MoviesWithProviders> => {
   try {
     const response: MovieResponseApi = await requestGetPopularMovie(page)
+
+    const moviesWithProviders: MovieResultWithProviders[] = await getProvidersOfMovies(response)
+
+    const responseMoviesWithProviders: MoviesWithProviders = { ...response, results: moviesWithProviders }
+    return responseMoviesWithProviders
+  } catch (err) {
+    return err
+  }
+}
+
+export const getTopRatedMoviesWithProviders = async (page: number): Promise<MoviesWithProviders> => {
+  try {
+    const response: MovieResponseApi = await requestGetTopRatedMovie(page)
 
     const moviesWithProviders: MovieResultWithProviders[] = await getProvidersOfMovies(response)
 

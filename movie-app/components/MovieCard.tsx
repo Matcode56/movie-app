@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginTop: 10,
     borderRadius: 3,
-    width: 300,
+    width: 350,
   },
   title: {
     fontWeight: '500',

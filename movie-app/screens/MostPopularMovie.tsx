@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { getMoviesWithProviders } from '../apiRequest/apiService'
+import { FlatList, StyleSheet, View } from 'react-native'
+import { getPopularMoviesWithProviders } from '../apiRequest/apiService'
 import MovieCard from '../components/MovieCard'
 import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
 
@@ -15,7 +15,7 @@ const MostPopularMovie = () => {
 
   const getMovies = async (): Promise<void> => {
     try {
-      const data: MoviesWithProviders = await getMoviesWithProviders(nextPage)
+      const data: MoviesWithProviders = await getPopularMoviesWithProviders(nextPage)
       const movies = data.results
       const totalPage = data.total_pages
       const page = data.page

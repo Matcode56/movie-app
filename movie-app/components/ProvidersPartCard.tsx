@@ -33,6 +33,16 @@ const ProvidersPartCard = ({ providers }: { providers: Providers[] }) => {
       <Text style={styles.secondTitle}>Where to watch this movie in France?</Text>
       <View style={styles.providers}>
         {!isProviders && <Text>No providers or film still shown in theaters</Text>}
+        {flatrateProviders &&
+          flatrateProviders.map((value, index) => {
+            return (
+              <View key={index} style={styles.provider}>
+                <Image style={styles.logo} source={{ uri: `https://image.tmdb.org/t/p/w500${value['logo_path']}` }} />
+                <Text style={styles.nameProvider}> {value['provider_name']}</Text>
+                <Text>Streaming</Text>
+              </View>
+            )
+          })}
         {rentProviders &&
           rentProviders.map((value, index) => {
             return (
@@ -43,6 +53,7 @@ const ProvidersPartCard = ({ providers }: { providers: Providers[] }) => {
               </View>
             )
           })}
+
         {buyProviders &&
           buyProviders.map((value, index) => {
             return (
@@ -50,16 +61,6 @@ const ProvidersPartCard = ({ providers }: { providers: Providers[] }) => {
                 <Image style={styles.logo} source={{ uri: `https://image.tmdb.org/t/p/w500${value['logo_path']}` }} />
                 <Text style={styles.nameProvider}> {value['provider_name']}</Text>
                 <Text>Buy</Text>
-              </View>
-            )
-          })}
-        {flatrateProviders &&
-          flatrateProviders.map((value, index) => {
-            return (
-              <View key={index} style={styles.provider}>
-                <Image style={styles.logo} source={{ uri: `https://image.tmdb.org/t/p/w500${value['logo_path']}` }} />
-                <Text style={styles.nameProvider}> {value['provider_name']}</Text>
-                <Text>Streaming</Text>
               </View>
             )
           })}
@@ -76,12 +77,12 @@ const styles = StyleSheet.create({
   secondTitle: {
     fontSize: 17,
     fontWeight: '500',
-    marginBottom: 10,
+    marginBottom: 15,
     marginTop: 10,
   },
   providers: { flexDirection: 'row', flexWrap: 'wrap' },
   provider: {
-    width: '50%',
+    width: '33%',
     marginBottom: 15,
     justifyContent: 'center',
     alignItems: 'center',
