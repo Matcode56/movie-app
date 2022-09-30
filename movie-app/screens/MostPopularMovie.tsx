@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { getPopularMoviesWithProviders } from '../apiRequest/apiService'
-import MovieCard from '../components/MovieCard'
+import { getPopularMoviesWithProviders } from '../utils/MoviesService'
+import MovieCard from '../components/CardMovie/MovieCard'
 import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
 
-const MostPopularMovie = () => {
+const MostPopularMovie: FC = () => {
   const [movies, setMovies] = useState<MovieResultWithProviders[]>([])
   const [totalPage, setTotalPage] = useState<number>()
   const [nextPage, setNextPage] = useState<number>(1)

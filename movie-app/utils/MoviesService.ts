@@ -1,7 +1,8 @@
+import { requestGetPopularMovie, requestGetProvidersOfMovie, requestGetTopRatedMovie } from '../api/apiRequest'
+import { MovieResponseApi, MovieResult } from '../interfaces/MovieResponseApi'
 import { MovieResultWithProviders, MoviesWithProviders } from '../interfaces/MovieWithProviders'
+import { ProvidersFormattedToDisplay } from '../interfaces/ProvidersFormattedToDispay'
 import { Provider, ProvidersByCountry } from '../interfaces/ProvidersResponseApi'
-import { MovieResult, MovieResponseApi } from '../interfaces/MovieResponseApi'
-import { requestGetPopularMovie, requestGetProvidersOfMovie, requestGetTopRatedMovie } from './apiRequest'
 
 export const getPopularMoviesWithProviders = async (page: number): Promise<MoviesWithProviders> => {
   try {
@@ -66,4 +67,63 @@ const mergeMovieWithProviders = (providers: ProvidersByCountry, movie: MovieResu
   }
   const movieWithProvider = { ...movie, providers: providersFrance }
   return movieWithProvider
+}
+
+export const formatDuplicateProviders = (
+  flatrateProviders: Provider[],
+  rentProviders: Provider[],
+  buyProviders: Provider[]
+): ProvidersFormattedToDisplay => {
+  const flatrate = flatrateProviders
+  const buyAndRent = buyProviders ? findDuplicateProviders(buyProviders, rentProviders) : undefined
+
+  if (buyAndRent !== undefined) {
+    const buy = deleteDuplicateProviders(buyProviders, buyAndRent)
+    const rent = deleteDuplicateProviders(rentProviders, buyAndRent)
+
+    const providers = {
+      flatrate,
+      buyAndRent,
+      rent,
+      buy,
+    }
+    return providers
+  }
+  const rent = rentProviders
+  const buy = buyProviders
+  const providers = {
+    buyAndRent,
+    flatrate,
+    rent,
+    buy,
+  }
+  return providers
+}
+
+const findDuplicateProviders = (arrayProviders: Provider[], arrayToCompare: Provider[]) => {
+  if (!arrayToCompare || arrayToCompare.length === 0) return undefined
+
+  const duplicates: Provider[] = arrayProviders.filter((provider: Provider) => {
+    const isIncludesInSecondArray = arrayToCompare.find(
+      (providerToCompare: Provider) => providerToCompare['provider_name'] === provider['provider_name']
+    )
+    return isIncludesInSecondArray
+  })
+
+  if (duplicates.length === 0) return undefined
+  else return duplicates
+}
+
+const deleteDuplicateProviders = (arrayProviders: Provider[], arrayToCompare: Provider[]) => {
+  if (!arrayToCompare || arrayToCompare.length === 0) return undefined
+
+  const arrayWithotuDuplicates: Provider[] = arrayProviders.filter((provider: Provider) => {
+    const isIncludesInSecondArray = arrayToCompare.find(
+      (providerToCompare: Provider) => providerToCompare['provider_name'] === provider['provider_name']
+    )
+    return !isIncludesInSecondArray
+  })
+
+  if (arrayWithotuDuplicates.length === 0) return undefined
+  else return arrayWithotuDuplicates
 }

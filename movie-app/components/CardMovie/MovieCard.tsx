@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
-import { MovieResultWithProviders } from '../interfaces/MovieWithProviders'
+import { MovieResultWithProviders } from '../../interfaces/MovieWithProviders'
 import ProvidersPartCard from './ProvidersPartCard'
 
-const MovieCard = ({ movie }: { movie: MovieResultWithProviders }) => {
+const MovieCard: FC<{ movie: MovieResultWithProviders }> = ({ movie }) => {
   useEffect(() => {}, [])
 
   return (
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     paddingRight: 35,
     paddingLeft: 35,
     paddingBottom: 5,
+    alignItems: 'center',
   },
 
   textInfos: {
